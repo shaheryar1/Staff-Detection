@@ -1,8 +1,18 @@
-from staffClassifier.components.data_ingestion import DataIngestion
-from staffClassifier.config_manager.configuration import ConfigurationManager
+from staffClassifier.pipeline.data_pipeline import DataIngestionPipeline
+from staffClassifier import logger
+from staffClassifier.pipeline.train_pipeline import TrainPipeline
+
+try:
+    logger.info('====== Running Data Pipeline ========')
+    p1 = DataIngestionPipeline()
+    p1.run()
+except Exception as e:
+    logger.error(e)
 
 
-
-conf = ConfigurationManager()
-data_ingestion= DataIngestion((conf.get_data_ingestion_config()))
-data_ingestion.extract_zip_file()
+try:
+    logger.info('====== Running Train Pipeline ========')
+    t = TrainPipeline()
+    t.run()
+except Exception as e:
+    logger.error(e)

@@ -6,4 +6,11 @@ lightning
 streamlit
 Pillow
 scikit-learn
+gdown
+ensure
+python-box==6.0.2
+pyYAML
+tqdm
+notebook
+mlflow
 -e .

@@ -1,0 +1,15 @@
+
+model:
+  name: 'mobilenet_v2'
+  num_classes: 2
+  input_size: [3, 224 , 224]
+  pretrained: True
+  checkpoint: None
+
+train: 
+  learning_rate: 0.001
+  epochs: 1
+  batch_size: 32
+  model_save_path: artifacts/checkpoints
+  dataset_path: artifacts/data_ingestion/Dataset
+  
