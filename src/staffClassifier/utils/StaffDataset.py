@@ -1,11 +1,8 @@
-from torchvision import transforms, datasets
-import os
 from PIL import Image
-from sklearn.model_selection import train_test_split
-
+from ensure import ensure_annotations
 import pandas as pd
 import numpy as np
-from torchvision import transforms, datasets
+from torchvision import transforms,
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset
@@ -35,7 +32,8 @@ class StaffDataset(Dataset):
     def __len__(self):
         return len(self.dataframe)
 
-    def __getitem__(self, idx):
+    @ensure_annotations
+    def __getitem__(self, idx: int):
         image_path = self.dataframe.iloc[idx, 0]
         target = self.dataframe.iloc[idx, 1]
 
@@ -46,8 +44,8 @@ class StaffDataset(Dataset):
 
         return image, target
 
-def train_dataloader(train_df,batch_size = 32):
+def train_dataloader(train_df : pd.DataFrame,batch_size = 32):
     return DataLoader(StaffDataset(train_df, data_transforms['train']), batch_size=batch_size, shuffle=True)
 
-def val_dataloader(val_df,batch_size = 32):
+def val_dataloader(val_df: pd.DataFrame ,batch_size = 32):
     return DataLoader(StaffDataset(val_df, data_transforms['val']), batch_size=batch_size)
