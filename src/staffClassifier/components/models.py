@@ -3,29 +3,33 @@ import torch.nn as nn
 import torch 
 import pytorch_lightning as pl
 import torch.optim as optim
+from staffClassifier.entity import ModelConfig, TrainConfig
+import mlflow 
 
-def get_custom_mobilenet(num_classes = 2):
-    model = mobilenet_v2(pretrained=True)
-    for param in model.parameters():
-        param.requires_grad = False
+def get_custom_model(model_config: ModelConfig):
+    if model_config.name == 'mobilenet_v2':
+        model = mobilenet_v2(pretrained=True)
+        for param in model.parameters():
+            param.requires_grad = False
 
-    # Modify the last layer for two classes
-    num_features = model.classifier[1].in_features
-    model.classifier[1] = nn.Linear(num_features, 256)
-    model.classifier.append(nn.Dropout(0.2))
-    model.classifier.append(nn.Linear(256,num_classes))
+        # Modify the last layer for two classes
+        num_features = model.classifier[1].in_features
+        model.classifier[1] = nn.Linear(num_features, 256)
+        model.classifier.append(nn.Dropout(0.2))
+        model.classifier.append(nn.Linear(256,model_config.num_classes))
     return model
 
 
 class ImageClassifier(pl.LightningModule):
-    def __init__(self, model ,  learning_rate=0.001):
+    def __init__(self, model_config: ModelConfig , train_config: TrainConfig = None ):
         super().__init__()
-        self.learning_rate = learning_rate 
+        self.save_hyperparameters()
+        if train_config is not None:
+            self.learning_rate = train_config.learning_rate 
         # Define loss function
         self.criterion = nn.CrossEntropyLoss()
-
         # Define model
-        self.model = model
+        self.model = get_custom_model(model_config)
 
     def forward(self, x):
         return self.model(x)

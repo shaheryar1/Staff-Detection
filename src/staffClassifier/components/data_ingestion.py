@@ -1,8 +1,8 @@
-from staffClassifier.config_manager.configuration import ConfigurationManager,DataIngestionConfig
 import gdown
 from staffClassifier import logger
 import os
 import zipfile
+from staffClassifier.entity import *
 
 class DataIngestion:
 
@@ -16,14 +16,14 @@ class DataIngestion:
         try: 
             dataset_url = self.config.source_url
             zip_download_dir = self.config.local_data_file
-            os.makedirs("artifacts/data_ingestion", exist_ok=True)
-            logger.info(f"Downloading data from {dataset_url} into file {zip_download_dir}")
+            if os.path.exists(zip_download_dir):
+                logger.info('File already exists. Skipping download')
+            else:
 
-        
-            gdown.download(dataset_url, zip_download_dir, quiet=False)
-            
-
-            logger.info(f"Downloaded data from {dataset_url} into file {zip_download_dir}")
+                os.makedirs("artifacts/data_ingestion", exist_ok=True)
+                logger.info(f"Downloading data from {dataset_url} into file {zip_download_dir}")
+                gdown.download(dataset_url, zip_download_dir, quiet=False)
+                logger.info(f"Downloaded data from {dataset_url} into file {zip_download_dir}")
 
         except Exception as e:
             raise e
