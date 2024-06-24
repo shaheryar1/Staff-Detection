@@ -18,8 +18,6 @@ def get_custom_model(model_config: ModelConfig):
         model.classifier.append(nn.Dropout(0.2))
         model.classifier.append(nn.Linear(256,model_config.num_classes))
     return model
-
-
 class ImageClassifier(pl.LightningModule):
     def __init__(self, model_config: ModelConfig , train_config: TrainConfig = None ):
         super().__init__()

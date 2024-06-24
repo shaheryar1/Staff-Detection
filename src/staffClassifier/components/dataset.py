@@ -69,6 +69,6 @@ def prepare_dataset(path, split = True):
     df['target'] = df['target'].astype(int)
     if split :
         train_df, val_df = train_test_split(df, test_size=0.30,shuffle=True)
-        return train_df, val_df
+        return train_df[0:100], val_df[0:100]
     else:
         return df

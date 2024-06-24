@@ -34,6 +34,7 @@ def predict(model,image):
 
 
 if __name__ == '__main__':
+    # Import model configs
     model_config = ConfigurationManager().get_model_config()
     ckpt_path = r'artifacts/checkpoints/epoch=2-step=5019.ckpt'
     checkpoint = torch.load(ckpt_path,map_location=torch.device('cpu'))

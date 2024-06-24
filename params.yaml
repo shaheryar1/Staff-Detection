@@ -8,7 +8,7 @@ model:
 
 train: 
   learning_rate: 0.001
-  epochs: 1
+  epochs: 3
   batch_size: 32
   model_save_path: artifacts/checkpoints
   dataset_path: artifacts/data_ingestion/Dataset

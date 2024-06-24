@@ -52,3 +52,6 @@ class ConfigurationManager:
             dataset_path= params.dataset_path
         )
         return train_config
+
+    def get_eval_configs(self):
+        pass

@@ -6,7 +6,8 @@ class TrainPipeline:
 
     def __init__(self) -> None:
         pass
-    def run():
+    
+    def main(self):
         cm = ConfigurationManager()
         t = Trainer(cm.get_model_config(), cm.get_train_config())
         t.train()   
